@@ -15,6 +15,7 @@ class HomeContainer extends Component {
 
     return(
       <div>
+        <button onClick={this.props.handleLogoutClick}>Logout</button>
         {this.mapReminders()}
       <Sidebar/>
       <MonthContainer/>
