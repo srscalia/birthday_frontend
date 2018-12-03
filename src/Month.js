@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Calendar from "./Calendar";
 
 class Month extends Component {
 
@@ -6,6 +7,7 @@ class Month extends Component {
     return(
       <div>
       Month
+      <Calendar/>
       </div>
     )
   }
