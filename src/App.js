@@ -27,31 +27,34 @@ class App extends Component {
   }
 
   authenticateUser = () => {
-    console.log(this.state)
-    fetch(USERTOKEN, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body : JSON.stringify({
-        "auth": {"email": this.state.emailInput, "password": this.state.passwordInput}
-      })
-    })
-    .then(res => res.json())
-    .then(json => localStorage.setItem("jwt", json.jwt))
-    // .then(this.fetchCurrentUser()) put this back in once we fix fetchCurrentUser
-  }
+    let foundUser = this.state.users.find(user => user.email === this.state.emailInput)
+    this.setState({loggedInUser: foundUser})
+    debugger
 
-  fetchCurrentUser = () => {
-    fetch(CURRENTUSER, {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.jwt}`,
-      }),
-      body: JSON.stringify()
-    })
-    .then(console.log)
+  //   console.log(this.state)
+  //   fetch(USERTOKEN, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body : JSON.stringify({
+  //       "auth": {"email": this.state.emailInput, "password": this.state.passwordInput}
+  //     })
+  //   })
+  //   .then(res => res.json())
+  //   .then(json => localStorage.setItem("jwt", json.jwt))
+  //   .then(this.fetchCurrentUser())
+  // }
+  //
+  // fetchCurrentUser = () => {
+  //   fetch(CURRENTUSER, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Authorization": `Bearer ${localStorage.jwt}`,
+  //     }
+  //   })
+  //   .then(console.log)
     ///// // TODO:  NEED TO FIX THIS SO THAT IT FETCHES THE CURRENT USER AND WE CAN PUT IT IN STATE AS AN OBJECT
   }
 
@@ -75,8 +78,8 @@ class App extends Component {
   }
 
   handleLogoutClick = (event) => {
-    localStorage.clear()
-    this.setState({loggedInUser: {}})
+    // localStorage.clear()
+    this.setState({loggedInUser: null})
   }
 
 
@@ -85,7 +88,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {localStorage.jwt ? <HomeContainer
+        {this.state.loggedInUser ? <HomeContainer
           user={this.findUser()}
           handleLogoutClick={this.handleLogoutClick}
           /> : <Welcome
