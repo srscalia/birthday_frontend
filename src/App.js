@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Welcome from './Welcome';
 import HomeContainer from './HomeContainer'
+import Button from './Button'
 
 const USERS = 'http://localhost:3000/api/v1/users'
 
@@ -34,6 +35,7 @@ class App extends Component {
     console.log(this.findUser());
     return (
       <div>
+        <Button/>
         {this.state.loggedInUser ? <HomeContainer user={this.findUser()}/> : <Welcome/>}
       </div>
     );
