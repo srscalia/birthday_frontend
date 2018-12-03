@@ -5,7 +5,6 @@ class EditDetails extends Component {
   render(){
     return(
       <div>
-      EditDetails
       </div>
     )
   }

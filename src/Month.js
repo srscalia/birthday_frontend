@@ -6,8 +6,7 @@ class Month extends Component {
   render(){
     return(
       <div>
-      Month
-      <Calendar/>
+      <Calendar handleNameClick={this.props.handleNameClick} dates={this.props.dates}/>
       </div>
     )
   }

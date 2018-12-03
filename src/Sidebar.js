@@ -5,7 +5,7 @@ class Sidebar extends Component {
 
   mapThroughUpcoming = ()=> {
     return this.props.sidebarDates.map(date=>{
-      return <UpcomingDetails birthday={date.birthday} personName={date.person_name}/>
+      return <UpcomingDetails key={date.id} birthday={date.birthday} personName={date.person_name}/>
     })
   }
 

@@ -7,8 +7,8 @@ class DetailsContainer extends Component {
   render(){
     return(
       <div>
-      DetailsContainer
-      <ViewDetails/>
+      Reminder Details
+      <ViewDetails selectedReminder={this.props.selectedReminder}/>
       <EditDetails/>
       </div>
     )

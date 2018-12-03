@@ -5,26 +5,32 @@ import DetailsContainer from './DetailsContainer'
 
 class HomeContainer extends Component {
 
+  state = {
+    selectedReminder: null
+  }
 
 
   sidebarDates = ()=>{
     if (this.props.user) {
       return this.props.user.reminders.filter(reminder=>{
         if (new Date(reminder.birthday) > new Date()) {
-          return (new Date(reminder.birthday)-new Date())*(1.1574e-8) <=10
+          return (new Date(reminder.birthday)-new Date())*(1.1574e-8) <=15
         }
       })
     }
   }
 
-  render(){
+  handleNameClick = (reminder)=>{
+    this.setState({
+      selectedReminder: reminder
+    })
+  }
 
+  render(){
     return(
-      <div>
-        <button onClick={this.props.handleLogoutClick}>Logout</button>
-      <Sidebar sidebarDates={this.sidebarDates()}/>
-      <MonthContainer/>
-      <DetailsContainer/>
+      <div >
+        <Sidebar sidebarDates={this.sidebarDates()}/>
+        {this.state.selectedReminder ? <DetailsContainer selectedReminder={this.state.selectedReminder}/> : <MonthContainer handleNameClick={this.handleNameClick}  dates={this.props.user.reminders}/>}
       </div>
     )
   }

@@ -7,8 +7,7 @@ class MonthContainer extends Component {
   render(){
     return(
       <div>
-      MonthContainer
-      <Month/>
+      <Month handleNameClick={this.props.handleNameClick} dates={this.props.dates}/>
       </div>
     )
   }

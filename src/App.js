@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Welcome from './Welcome';
 import HomeContainer from './HomeContainer'
+import Header from './Header'
 
 const USERS = 'http://localhost:3000/api/v1/users'
 const USERTOKEN = 'http://localhost:3000/api/v1/user_token'
@@ -83,10 +84,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.loggedInUser ? <HomeContainer
+      <div >
+        <Header handleLogoutClick={this.handleLogoutClick}/>
+        {this.state.loggedInUser ? <HomeContainer 
           user={this.state.loggedInUser}
-          handleLogoutClick={this.handleLogoutClick}
           /> : <Welcome
           handleEmailChange={this.handleEmailChange}
           handlePasswordChange={this.handlePasswordChange}

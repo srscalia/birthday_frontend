@@ -5,7 +5,7 @@ class ViewDetails extends Component {
   render(){
     return(
       <div>
-      ViewDetails
+      {this.props.selectedReminder ? this.props.selectedReminder.birthday : null}
       </div>
     )
   }

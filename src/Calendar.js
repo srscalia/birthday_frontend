@@ -45,9 +45,32 @@ class Calendar extends React.Component {
     return <div className="days row">{days}</div>;
   }
 
+  compareDates = (reminder, day)=>{
+    let birthdayMonth = new Date(reminder.birthday).getMonth();
+    let birthdayDay = new Date(reminder.birthday).getUTCDate();
+    let birthdayYear = new Date(reminder.birthday).getYear();
+    let currentMonth = day.getMonth();
+    let currentDay = day.getUTCDate();
+    let currentyear = day.getYear();
+    if (birthdayMonth===currentMonth && birthdayDay===currentDay && birthdayYear===currentyear) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  conditionalRenderingDates = (day) =>{
+    return this.props.dates.map(reminder=>{
+      if (this.compareDates(reminder, day)) {
+        return <div className="viewDetails" onClick={()=>    this.props.handleNameClick(reminder)} key={reminder.id}>{reminder.person_name}</div>
+      }
+    })
+  }
+
   renderCells() {
     const { currentMonth, selectedDate } = this.state;
     const monthStart = dateFns.startOfMonth(currentMonth);
+
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
     const endDate = dateFns.endOfWeek(monthEnd);
@@ -58,9 +81,9 @@ class Calendar extends React.Component {
     let days = [];
     let day = startDate;
     let formattedDate = "";
-
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
+        //  grab the number of the day
         formattedDate = dateFns.format(day, dateFormat);
         const cloneDay = day;
         days.push(
@@ -71,10 +94,11 @@ class Calendar extends React.Component {
                 : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
             }`}
             key={day}
-            onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
+            onClick={(event) => this.onDateClick(dateFns.parse(cloneDay))}
           >
             <span className="number">{formattedDate}</span>
-            <span className="bg">{formattedDate}</span>
+            <span className='bg'>{formattedDate}</span>
+            <div>{this.conditionalRenderingDates(day)}</div>
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -89,7 +113,7 @@ class Calendar extends React.Component {
     return <div className="body">{rows}</div>;
   }
 
-  onDateClick = day => {
+  onDateClick = (day) => {
     this.setState({
       selectedDate: day
     });
