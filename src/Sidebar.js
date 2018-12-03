@@ -3,11 +3,16 @@ import UpcomingDetails from './UpcomingDetails';
 
 class Sidebar extends Component {
 
+  mapThroughUpcoming = ()=> {
+    return this.props.sidebarDates.map(date=>{
+      return <UpcomingDetails birthday={date.birthday} personName={date.person_name}/>
+    })
+  }
+
   render(){
     return(
       <div>
-      Sidebar
-      <UpcomingDetails/>
+      {this.mapThroughUpcoming()}
       </div>
     )
   }

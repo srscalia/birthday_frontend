@@ -1,9 +1,9 @@
 import React from "react";
 
-const UpcomingDetails = () => {
+const UpcomingDetails = (props) => {
 
     return(
-      <div>UpcomingDetails</div>
+      <div>{props.birthday} {props.personName}</div>
     )
 
 }

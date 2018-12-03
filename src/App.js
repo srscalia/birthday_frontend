@@ -27,9 +27,10 @@ class App extends Component {
   }
 
   authenticateUser = () => {
-    let foundUser = this.state.users.find(user => user.email === this.state.emailInput)
+    let foundUser = this.state.users.find(user =>
+      user.email === this.state.emailInput)
     this.setState({loggedInUser: foundUser})
-    debugger
+
 
   //   console.log(this.state)
   //   fetch(USERTOKEN, {
@@ -58,11 +59,6 @@ class App extends Component {
     ///// // TODO:  NEED TO FIX THIS SO THAT IT FETCHES THE CURRENT USER AND WE CAN PUT IT IN STATE AS AN OBJECT
   }
 
-  findUser = ()=> {
-    return this.state.users.find(user=>{
-      return user.id ===this.state.loggedInUser
-    })
-  }
 
   handleEmailChange = (event) => {
     this.setState({emailInput : event.target.value})
@@ -89,7 +85,7 @@ class App extends Component {
     return (
       <div>
         {this.state.loggedInUser ? <HomeContainer
-          user={this.findUser()}
+          user={this.state.loggedInUser}
           handleLogoutClick={this.handleLogoutClick}
           /> : <Welcome
           handleEmailChange={this.handleEmailChange}

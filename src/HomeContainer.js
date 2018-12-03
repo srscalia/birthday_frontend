@@ -5,9 +5,15 @@ import DetailsContainer from './DetailsContainer'
 
 class HomeContainer extends Component {
 
-  mapReminders = ()=>{
+
+
+  sidebarDates = ()=>{
     if (this.props.user) {
-      return this.props.user.reminders.map(reminder=>{return <div>{reminder.birthday}</div>})
+      return this.props.user.reminders.filter(reminder=>{
+        if (new Date(reminder.birthday) > new Date()) {
+          return (new Date(reminder.birthday)-new Date())*(1.1574e-8) <=10
+        }
+      })
     }
   }
 
@@ -16,8 +22,7 @@ class HomeContainer extends Component {
     return(
       <div>
         <button onClick={this.props.handleLogoutClick}>Logout</button>
-        {this.mapReminders()}
-      <Sidebar/>
+      <Sidebar sidebarDates={this.sidebarDates()}/>
       <MonthContainer/>
       <DetailsContainer/>
       </div>
