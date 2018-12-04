@@ -82,6 +82,7 @@ class App extends Component {
   handleLoginSubmit = (event) => {
     event.preventDefault()
     this.authenticateUser()
+    this.setState({emailInput: "", passwordInput: ""})
   }
 
   handleLogoutClick = (event) => {
@@ -112,7 +113,49 @@ class App extends Component {
     .then(res => res.json())
     .then(data => this.addReminder(data))
     .then(event.target.reset())
-    .then(this.setState({redirect: true}))
+    .then(this.setState({
+      redirect: true,
+      personName: "",
+      relation: "",
+      birthday: "",
+      notes: "",
+      phone: ""
+    }))
+  }
+
+
+  handleUpdate = (event) => {
+    event.preventDefault()
+    let reminderId = event.target.id
+    let data = {
+     "user_id": this.state.loggedInUser.id,
+     "relation": this.state.relation,
+     "birthday": this.state.birthday,
+     "person_name": this.state.personName,
+     "send_reminder": true,
+     "phone": this.state.phone,
+     "notes": this.state.notes
+    }
+
+
+    fetch(`http://localhost:3000/api/v1/reminders/${reminderId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(data => this.updateReminder(data))
+    .then(event.target.reset())
+    .then(this.setState({
+      redirect: true,
+      personName: "",
+      relation: "",
+      birthday: "",
+      notes: "",
+      phone: ""
+    }))
   }
 
   addReminder = (data) => {
@@ -122,6 +165,23 @@ class App extends Component {
       }}
     })
   }
+
+  updateReminder = (data) => {
+    this.setState(prevState => {
+      const filteredReminders = prevState.loggedInUser.reminders.map(reminder => {
+        if (reminder.id === data.id) {
+          return data
+        } else {
+          return reminder
+        }
+      })
+
+      return {loggedInUser: {
+        ...prevState.loggedInUser, reminders: filteredReminders
+      }}
+    })
+  }
+
 
   handleFormChange = (event) => {
     let name = event.target.name
@@ -142,8 +202,47 @@ class App extends Component {
     this.setState({redirect: false})
   }
 
-  render() {
+  handleCancelClick = (event) => {
+    event.target.parentElement.reset()
+    this.setState({redirect: true})
+  }
 
+  passUpSelected = (reminder) => {
+    this.setState({
+      personName: reminder.person_name,
+      relation: reminder.relation,
+      birthday: reminder.birthday,
+      notes: reminder.notes,
+      phone: reminder.phone
+    })
+  }
+
+  handleDeleteClick = (reminder) => {  
+    fetch(`http://localhost:3000/api/v1/reminders/${reminder.id}`, {
+      method: "DELETE"
+    })
+    .then(() => this.removeReminder(reminder))
+    .then(this.setState({
+      redirect: true,
+      personName: "",
+      relation: "",
+      birthday: "",
+      notes: "",
+      phone: ""
+    }))
+  }
+
+  removeReminder = (deletedReminder) => {
+    this.setState(prevState => {
+      const filteredReminders = prevState.loggedInUser.reminders.filter(reminder => reminder.id !== deletedReminder.id )
+
+      return {loggedInUser: {
+        ...prevState.loggedInUser, reminders: filteredReminders
+      }}
+    })
+  }
+
+  render() {
     return (
       <BrowserRouter>
         <div>
@@ -151,14 +250,23 @@ class App extends Component {
 
           {this.redirect()}
 
-          {this.state.loggedInUser ? <Route exact path="/" render={ () => <HomeContainer user={this.state.loggedInUser}/>}/> : <Route exact path="/" render={()=> <Welcome
+          {this.state.loggedInUser ? <Route exact path="/" render={ () => <HomeContainer user={this.state.loggedInUser} passUpSelected={this.passUpSelected}
+          selectedState={this.state}
+          handleFormChange={this.handleFormChange}
+          handleUpdate={this.handleUpdate}
+          changeRedirect={this.changeRedirect}
+          handleDeleteClick={this.handleDeleteClick}
+          />}/> : <Route exact path="/" render={()=> <Welcome
             handleEmailChange={this.handleEmailChange}
             handlePasswordChange={this.handlePasswordChange}
             handleLoginSubmit={this.handleLoginSubmit}/>}/>}
         </div>
 
         <div>
-          {this.state.loggedInUser ? <Route path="/newreminder" render={() => <ReminderForm handleSubmit={this.handleSubmit} handleFormChange={this.handleFormChange} />}/> : null}
+          {this.state.loggedInUser ? <Route path="/newreminder" render={() => <ReminderForm
+            handleSubmit={this.handleSubmit} handleFormChange={this.handleFormChange}
+            handleCancelClick={this.handleCancelClick}
+          />}/> : null}
         </div>
 
         <div>

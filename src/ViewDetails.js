@@ -27,8 +27,14 @@ class ViewDetails extends Component {
           <div className="hidden content">Edit</div>
           <div className="visible content">
           <i className="wrench icon"></i>
+          </div>
         </div>
-</div>
+        <div className="ui vertical animated button" onClick={() => this.props.handleDeleteClick(this.props.selectedReminder)} tabIndex="0">
+          <div className="hidden content">Delete</div>
+          <div className="visible content">
+          <i className="trash icon"></i>
+          </div>
+        </div>
 
       </div>
     )
