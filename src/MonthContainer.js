@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Month from './Month'
+import Calendar from './Calendar'
 
 
 class MonthContainer extends Component {
 
   render(){
     return(
-      <div>
-      <Month handleNameClick={this.props.handleNameClick} dates={this.props.dates}/>
+      <div className="twelve wide column">
+        <Calendar handleNameClick={this.props.handleNameClick} dates={this.props.dates}/>
       </div>
     )
   }

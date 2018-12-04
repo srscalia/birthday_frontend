@@ -28,7 +28,7 @@ class HomeContainer extends Component {
 
   render(){
     return(
-      <div >
+      <div className="ui grid">
         <Sidebar sidebarDates={this.sidebarDates()}/>
         {this.state.selectedReminder ? <DetailsContainer selectedReminder={this.state.selectedReminder}/> : <MonthContainer handleNameClick={this.handleNameClick}  dates={this.props.user.reminders}/>}
       </div>

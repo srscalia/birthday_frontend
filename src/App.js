@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import Welcome from './Welcome';
 import HomeContainer from './HomeContainer'
 import Header from './Header'
+import { BrowserRouter, Route, NavLink } from 'react-router-dom'
 
 const USERS = 'http://localhost:3000/api/v1/users'
-const USERTOKEN = 'http://localhost:3000/api/v1/user_token'
-const CURRENTUSER = 'http://localhost:3000/api/v1/users/current'
+// const USERTOKEN = 'http://localhost:3000/api/v1/user_token'
+// const CURRENTUSER = 'http://localhost:3000/api/v1/users/current'
 
 
 class App extends Component {
@@ -84,16 +85,16 @@ class App extends Component {
 
   render() {
     return (
-      <div >
-        <Header handleLogoutClick={this.handleLogoutClick}/>
-        {this.state.loggedInUser ? <HomeContainer 
-          user={this.state.loggedInUser}
-          /> : <Welcome
-          handleEmailChange={this.handleEmailChange}
-          handlePasswordChange={this.handlePasswordChange}
-          handleLoginSubmit={this.handleLoginSubmit}
-        />}
-      </div>
+      <BrowserRouter>
+        <div>
+          <Header handleLogoutClick={this.handleLogoutClick}/>
+          {this.state.loggedInUser ? <Route exact path="/" render={ () => <HomeContainer user={this.state.loggedInUser}/>}/> : <Route exact path="/" render={()=> <Welcome
+            handleEmailChange={this.handleEmailChange}
+            handlePasswordChange={this.handlePasswordChange}
+            handleLoginSubmit={this.handleLoginSubmit}/>}/>}
+
+        </div>
+      </BrowserRouter>
     );
   }
 }

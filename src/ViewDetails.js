@@ -6,10 +6,10 @@ class ViewDetails extends Component {
     return(
       <div className="ui card container">
         <div className="image">
-          <img src="https://png.pngtree.com/svg/20170220/balloon_437926.png"/>
+          <img src="https://png.pngtree.com/svg/20170220/balloon_437926.png" alt="balloons"/>
         </div>
         <div className="content">
-          <a className="header">{this.props.selectedReminder.person_name}</a>
+          <div className="header">{this.props.selectedReminder.person_name}</div>
           <div className="meta">
             <span className="date">Birthday: {this.props.selectedReminder.birthday}</span>
           </div>
@@ -18,7 +18,7 @@ class ViewDetails extends Component {
           </div>
         </div>
         <div className="extra content">
-          <a>
+          <a href="search">
             <i className="gift icon"></i>
             {this.props.selectedReminder.notes}
           </a>

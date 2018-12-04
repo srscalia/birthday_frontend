@@ -11,8 +11,8 @@ class Sidebar extends Component {
 
   render(){
     return(
-      <div>
-      {this.mapThroughUpcoming()}
+      <div className="two wide column">
+        {this.mapThroughUpcoming()}
       </div>
     )
   }
