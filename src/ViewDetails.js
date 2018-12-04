@@ -23,10 +23,10 @@ class ViewDetails extends Component {
             {this.props.selectedReminder.notes}
           </a>
         </div>
-        <div class="ui vertical animated button" tabindex="0">
-          <div class="hidden content">Edit</div>
-          <div class="visible content">
-          <i class="wrench icon"></i>
+        <div className="ui vertical animated button" onClick={this.props.handleEditClick} tabIndex="0">
+          <div className="hidden content">Edit</div>
+          <div className="visible content">
+          <i className="wrench icon"></i>
         </div>
 </div>
 

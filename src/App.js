@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import Welcome from './Welcome';
 import HomeContainer from './HomeContainer'
 import Header from './Header'
-import { BrowserRouter, Route, NavLink } from 'react-router-dom'
+import Logout from './Logout'
+import ReminderForm from './ReminderForm'
+import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 
 const USERS = 'http://localhost:3000/api/v1/users'
+const REMINDERS = 'http://localhost:3000/api/v1/reminders'
 // const USERTOKEN = 'http://localhost:3000/api/v1/user_token'
 // const CURRENTUSER = 'http://localhost:3000/api/v1/users/current'
 
@@ -15,7 +18,13 @@ class App extends Component {
     loggedInUser: null,
     users: [],
     emailInput: "",
-    passwordInput: ""
+    passwordInput: "",
+    personName: "",
+    relation: "",
+    birthday: "",
+    notes: "",
+    phone: "",
+    redirect: false
   }
 
   componentDidMount(){
@@ -80,19 +89,80 @@ class App extends Component {
     this.setState({loggedInUser: null})
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault()
+
+    let data = {
+     "user_id": this.state.loggedInUser.id,
+     "relation": this.state.relation,
+     "birthday": this.state.birthday,
+     "person_name": this.state.personName,
+     "send_reminder": true,
+     "phone": this.state.phone,
+     "notes": this.state.notes
+    }
+
+    fetch(REMINDERS, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(data => this.addReminder(data))
+    .then(event.target.reset())
+    .then(this.setState({redirect: true}))
+  }
+
+  addReminder = (data) => {
+    this.setState(prevState => {
+      return {loggedInUser: {
+        ...prevState.loggedInUser, reminders:[...prevState.loggedInUser.reminders, data]
+      }}
+    })
+  }
+
+  handleFormChange = (event) => {
+    let name = event.target.name
+    let value = event.target.value
+    this.setState({
+      [name] : value
+    })
+  }
 
 
+  redirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/' />
+    }
+  }
+
+  changeRedirect = () => {
+    this.setState({redirect: false})
+  }
 
   render() {
+
     return (
       <BrowserRouter>
         <div>
-          <Header handleLogoutClick={this.handleLogoutClick}/>
+          <Header handleLogoutClick={this.handleLogoutClick} changeRedirect={this.changeRedirect}/>
+
+          {this.redirect()}
+
           {this.state.loggedInUser ? <Route exact path="/" render={ () => <HomeContainer user={this.state.loggedInUser}/>}/> : <Route exact path="/" render={()=> <Welcome
             handleEmailChange={this.handleEmailChange}
             handlePasswordChange={this.handlePasswordChange}
             handleLoginSubmit={this.handleLoginSubmit}/>}/>}
+        </div>
 
+        <div>
+          {this.state.loggedInUser ? <Route path="/newreminder" render={() => <ReminderForm handleSubmit={this.handleSubmit} handleFormChange={this.handleFormChange} />}/> : null}
+        </div>
+
+        <div>
+          <Route path="/logout" render={() => <Logout />} />
         </div>
       </BrowserRouter>
     );

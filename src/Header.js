@@ -1,17 +1,12 @@
 import React from "react";
+import { NavLink } from 'react-router-dom'
 
 const Header =(props)=>{
   return (
     <div className="ui inverted menu">
-      <a className="active item" href="use Router">
-        Home
-      </a>
-      <a className="item" href="use Router">
-        Add Reminder
-      </a>
-      <a className="item" onClick={props.handleLogoutClick} href="use Router">
-        Logout
-      </a>
+      <NavLink className="active item" to="/">Home</NavLink>
+      <NavLink className="item" to="/newreminder" onClick={props.changeRedirect}>Add Reminder</NavLink>
+      <NavLink className="item" to="/logout" onClick={props.handleLogoutClick}>Logout</NavLink>
     </div>
   )
 }

@@ -10,11 +10,11 @@ class HomeContainer extends Component {
   }
 
 
-  sidebarDates = ()=>{
+  sidebarDates = () => {
     if (this.props.user) {
       return this.props.user.reminders.filter(reminder=>{
         if (new Date(reminder.birthday) > new Date()) {
-          return (new Date(reminder.birthday)-new Date())*(1.1574e-8) <=15
+          return (new Date(reminder.birthday)-new Date())*(1.1574e-8) <= 15
         }
       })
     }
