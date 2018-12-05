@@ -4,7 +4,7 @@ import HomeContainer from './HomeContainer'
 import Header from './Header'
 import Logout from './Logout'
 import ReminderForm from './ReminderForm'
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, withRouter } from 'react-router-dom'
 
 const USERS = 'http://localhost:3000/api/v1/users'
 const REMINDERS = 'http://localhost:3000/api/v1/reminders'
@@ -158,7 +158,7 @@ class App extends Component {
       birthday: "",
       notes: "",
       phone: ""
-    }))
+    }), () => this.componentDidMount())
   }
 
   addReminder = (data) => {
@@ -207,7 +207,7 @@ class App extends Component {
 
   handleCancelClick = (event) => {
     event.target.parentElement.reset()
-    this.setState({redirect: true})
+    this.setState({redirect: true, showMessage: false})
   }
 
   passUpSelected = (reminder) => {
@@ -246,7 +246,7 @@ class App extends Component {
   }
 
   handleHomeClick = () => {
-    this.setState({redirect: true})
+    this.setState({redirect: true, showMessage: false})
   }
 
   handleMessageClick = () => {
@@ -323,4 +323,4 @@ class App extends Component {
     );
   }
 }
-export default App;
+export default App

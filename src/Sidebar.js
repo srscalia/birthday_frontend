@@ -12,8 +12,8 @@ class Sidebar extends Component {
   render(){
     return(
       <div className="ui vertical menu two wide column">
-        <i className="huge bullhorn icon"></i>
-        <h4>Upcoming Birthdays</h4>
+        <i className="huge bullhorn icon" style={{color: '#aa72ff'}}></i>
+        <h4 style={{color: '#aa72ff'}}>Upcoming Birthdays</h4>
         {this.mapThroughUpcoming()}
       </div>
     )

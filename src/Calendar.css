@@ -125,6 +125,7 @@ main {
 }
 
 .calendar .header {
+  background-color: #dff9d9;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 115%;

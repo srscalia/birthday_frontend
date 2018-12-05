@@ -28,9 +28,9 @@ class ViewDetails extends Component {
     return(
       <div className="ui card container">
         <div className="image">
-          <img src="https://png.pngtree.com/svg/20170220/balloon_437926.png" alt="balloons"/>
+          <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="balloons"/>
         </div>
-        <div className="content">
+        <div className="content" style={{background: '#aa72ff'}}>
           <div className="header">{this.props.selectedReminder.person_name}</div>
           <div className="meta">
             <span className="date">Birthday: {this.props.selectedReminder.birthday}</span>
@@ -46,14 +46,14 @@ class ViewDetails extends Component {
           </a>
         </div>
 
-        <div className="ui vertical animated button" onClick={this.props.handleMessageClick} tabIndex="0">
+        <div className="ui vertical animated button"  onClick={this.props.handleMessageClick} tabIndex="0">
           <div className="hidden content">Send Message</div>
           <div className="visible content">
           <i className="envelope icon"></i>
           </div>
         </div>
 
-        <div className="ui vertical animated button" onClick={this.props.handleEditClick} tabIndex="0">
+        <div className="ui vertical animated button"  onClick={this.props.handleEditClick} tabIndex="0">
           <div className="hidden content">Edit</div>
           <div className="visible content">
           <i className="wrench icon"></i>
@@ -67,7 +67,7 @@ class ViewDetails extends Component {
           </div>
         </div>
 
-        <div className="ui vertical animated button" onClick={this.props.handleGoBackClick} tabIndex="0">
+        <div className="ui vertical animated button"  onClick={this.props.handleGoBackClick} tabIndex="0">
           <div className="hidden content">Go Back</div>
           <div className="visible content">
           <i className="arrow left icon"></i>
