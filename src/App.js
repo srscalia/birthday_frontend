@@ -4,7 +4,7 @@ import HomeContainer from './HomeContainer'
 import Header from './Header'
 import Logout from './Logout'
 import ReminderForm from './ReminderForm'
-import { BrowserRouter, Route, Redirect, withRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect} from 'react-router-dom'
 
 const USERS = 'http://localhost:3000/api/v1/users'
 const REMINDERS = 'http://localhost:3000/api/v1/reminders'

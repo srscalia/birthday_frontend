@@ -7,7 +7,7 @@ class Welcome extends Component {
   render(){
     return(
       <div className="ui container">
-        <h2 style={{color: '#aa72ff'}}>Welcome to Birthday Reminder!</h2>
+        <img src="https://tbncdn.freelogodesign.org/bc114fdc-5cd8-43c7-a35f-c0d7ce4057ba.png?1544040628545" alt=""/>
         <p style={{color: '#aa72ff'}}>Please Login or Signup Below:</p>
         <Login
           handleEmailChange={this.props.handleEmailChange}
