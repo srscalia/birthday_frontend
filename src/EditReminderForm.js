@@ -47,7 +47,7 @@ class ReminderForm extends Component {
             </div>
           </div> */}
 
-          <button className="ui button" name="save" onClick={this.props.changeRedirect} tabIndex="0">Save</button>
+          <button className="ui button" name="save" tabIndex="0">Save</button>
           <div className="ui button" name="cancel" tabIndex="0" onClick={this.props.handleCancelClick}>Cancel</div>
         </form>
       </div>

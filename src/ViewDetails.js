@@ -2,6 +2,28 @@ import React, { Component } from 'react';
 
 class ViewDetails extends Component {
 
+  showMessageForm = () => {
+    if (this.props.showMessage === true) {
+      return (
+        <div className="ui container">
+          <h4 class="ui horizontal divider header">
+            <i class="mail icon"></i>
+            Message
+          </h4>
+          <form className="ui form" onSubmit={(event) => this.props.handleMessageSubmit(event, this.props.selectedReminder)}>
+            <div className="field">
+              <label>Enter Birthday Message Here</label>
+              <input type="text" onChange={this.props.handleMessageChange} name="birthdayMessage"  placeholder="Type your message"/>
+            </div>
+            <button className="ui button" name="send" tabIndex="0">Send</button>
+          </form>
+        </div>
+      )
+    } else {
+      return null
+    }
+  }
+
   render(){
     return(
       <div className="ui card container">
@@ -23,18 +45,37 @@ class ViewDetails extends Component {
             {this.props.selectedReminder.notes}
           </a>
         </div>
+
+        <div className="ui vertical animated button" onClick={this.props.handleMessageClick} tabIndex="0">
+          <div className="hidden content">Send Message</div>
+          <div className="visible content">
+          <i className="envelope icon"></i>
+          </div>
+        </div>
+
         <div className="ui vertical animated button" onClick={this.props.handleEditClick} tabIndex="0">
           <div className="hidden content">Edit</div>
           <div className="visible content">
           <i className="wrench icon"></i>
           </div>
         </div>
+
         <div className="ui vertical animated button" onClick={() => this.props.handleDeleteClick(this.props.selectedReminder)} tabIndex="0">
           <div className="hidden content">Delete</div>
           <div className="visible content">
           <i className="trash icon"></i>
           </div>
         </div>
+
+        <div className="ui vertical animated button" onClick={this.props.handleGoBackClick} tabIndex="0">
+          <div className="hidden content">Go Back</div>
+          <div className="visible content">
+          <i className="arrow left icon"></i>
+          </div>
+        </div>
+
+        <div>{this.showMessageForm()}</div>
+
 
       </div>
     )

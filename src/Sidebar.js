@@ -11,7 +11,9 @@ class Sidebar extends Component {
 
   render(){
     return(
-      <div className="two wide column">
+      <div className="ui vertical menu two wide column">
+        <i className="huge bullhorn icon"></i>
+        <h4>Upcoming Birthdays</h4>
         {this.mapThroughUpcoming()}
       </div>
     )
@@ -20,8 +22,3 @@ class Sidebar extends Component {
 }
 
 export default Sidebar
-
-
-// set state with current date new Date(); maybe use getMonth() and getDate() to extract the date and the month
-//sort all reminders by birthday, same format as the above
-// slice the first section of the sorted dates

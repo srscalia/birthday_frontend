@@ -3,7 +3,7 @@ import React from "react";
 const UpcomingDetails = (props) => {
 
     return(
-      <div>{props.birthday} - {props.personName}</div>
+      <p>{props.personName} - <br></br> {props.birthday}</p>
     )
 
 }

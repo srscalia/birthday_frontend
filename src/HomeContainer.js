@@ -38,6 +38,11 @@ class HomeContainer extends Component {
           handleUpdate={this.props.handleUpdate}
           changeRedirect={this.props.changeRedirect}
           handleDeleteClick={this.props.handleDeleteClick}
+          handleCancelClick={this.props.handleCancelClick}
+          handleMessageClick={this.props.handleMessageClick}
+          showMessage={this.props.showMessage}
+          handleMessageSubmit={this.props.handleMessageSubmit}
+          handleMessageChange={this.props.handleMessageChange}
       />
          : <MonthContainer handleNameClick={this.handleNameClick}  dates={this.props.user.reminders}/>}
       </div>

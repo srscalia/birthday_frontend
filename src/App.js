@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom'
 
 const USERS = 'http://localhost:3000/api/v1/users'
 const REMINDERS = 'http://localhost:3000/api/v1/reminders'
+const MESSAGES = 'http://localhost:3000/api/v1/messages'
 // const USERTOKEN = 'http://localhost:3000/api/v1/user_token'
 // const CURRENTUSER = 'http://localhost:3000/api/v1/users/current'
 
@@ -24,7 +25,9 @@ class App extends Component {
     birthday: "",
     notes: "",
     phone: "",
-    redirect: false
+    redirect: false,
+    showMessage: false,
+    message: "",
   }
 
   componentDidMount(){
@@ -217,7 +220,7 @@ class App extends Component {
     })
   }
 
-  handleDeleteClick = (reminder) => {  
+  handleDeleteClick = (reminder) => {
     fetch(`http://localhost:3000/api/v1/reminders/${reminder.id}`, {
       method: "DELETE"
     })
@@ -242,11 +245,50 @@ class App extends Component {
     })
   }
 
+  handleHomeClick = () => {
+    this.setState({redirect: true})
+  }
+
+  handleMessageClick = () => {
+    this.setState({showMessage: true})
+  }
+
+  handleMessageSubmit = (event, selectedReminder) => {
+    event.preventDefault()
+    let data = {
+      "reminder_id": selectedReminder.id,
+      "content": this.state.message
+    }
+
+    fetch(MESSAGES, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(data => alert(`Message successfully sent: ${data.content}`))
+    .then(event.target.reset())
+    .then(this.setState({
+      message: "",
+      showMessage: false
+    }))
+
+  }
+
+  handleMessageChange = (event) => {
+    this.setState({message: event.target.value})
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div>
-          <Header handleLogoutClick={this.handleLogoutClick} changeRedirect={this.changeRedirect}/>
+          <Header
+            handleLogoutClick={this.handleLogoutClick} changeRedirect={this.changeRedirect}
+            handleHomeClick={this.handleHomeClick}
+          />
 
           {this.redirect()}
 
@@ -256,6 +298,11 @@ class App extends Component {
           handleUpdate={this.handleUpdate}
           changeRedirect={this.changeRedirect}
           handleDeleteClick={this.handleDeleteClick}
+          handleCancelClick={this.handleCancelClick}
+          handleMessageClick={this.handleMessageClick}
+          showMessage={this.state.showMessage}
+          handleMessageSubmit={this.handleMessageSubmit}
+          handleMessageChange={this.handleMessageChange}
           />}/> : <Route exact path="/" render={()=> <Welcome
             handleEmailChange={this.handleEmailChange}
             handlePasswordChange={this.handlePasswordChange}

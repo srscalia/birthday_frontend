@@ -14,6 +14,7 @@ class DetailsContainer extends Component {
   handleCancelClick = (event) => {
     event.target.parentElement.reset()
     this.setState({edit:false})
+    this.props.handleCancelClick(event)
   }
 
   render(){
@@ -31,6 +32,10 @@ class DetailsContainer extends Component {
           selectedReminder={this.props.selectedReminder}
           handleEditClick={this.handleEditClick}
           handleDeleteClick={this.props.handleDeleteClick}
+          handleMessageClick={this.props.handleMessageClick}
+          showMessage={this.props.showMessage}
+          handleMessageSubmit={this.props.handleMessageSubmit}
+          handleMessageChange={this.props.handleMessageChange}
         />}
       </div>
     )
